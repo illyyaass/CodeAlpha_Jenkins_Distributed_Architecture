@@ -3,20 +3,18 @@ networks:
     driver: bridge
 
 services:
-  # 1. السيرفر الرئيسي المتحكم (Jenkins Controller)
   jenkins-master:
     image: jenkins/jenkins:lts-alpine
     container_name: jenkins-master
     ports:
-      - "8282:8080"   # تم التغيير هنا إلى 8282 لتفادي التعارض الافتراضي
-      - "50000:50000" # المنفذ الخاص بالـ Remoting تواصل العقد
+      - "8282:8080"  
+      - "50000:50000" 
     volumes:
       - jenkins_master_data:/var/jenkins_home
     networks:
       - jenkins-net
     restart: unless-stopped
 
-  # 2. العقدة الفرعية المعزولة أمنياً (Jenkins Agent Node)
   jenkins-agent:
     image: jenkins/inbound-agent:alpine
     container_name: jenkins-agent
